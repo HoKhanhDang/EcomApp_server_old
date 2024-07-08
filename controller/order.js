@@ -9,7 +9,12 @@ const createOrder = asyncHandler(async (req, res) => {
     if (!_id) return res.status(400).json({ message: "Please provide id" });    
 
     const { totalPrice, product, status, address, note } = req.body;
-    console.log(req.body);
+    product.map(async (item) => {
+        const product = await Product.findById({ _id: item.product._id });
+        product.sold = product.sold + item.quantity;
+        product.quantity = product.quantity - item.quantity;
+        await product.save();
+    })
     if (!totalPrice || !product || !status || !address) return res.status(400).json({ message: "Please provide all fields" });
 
     const deleteCart = await User.findByIdAndUpdate({ _id: _id }, { $set: { cart: [] } });
