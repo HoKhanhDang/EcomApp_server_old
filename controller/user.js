@@ -19,7 +19,7 @@ const register = asyncHandler(async (req, res) => {
     }
 
     const registerToken = makeToken();
-    res.cookie('registerToken',{registerToken ,user: req.body}, {httpOnly: true, maxAge: 15*60*1000});
+    res.cookie('registerToken',{registerToken ,user: req.body}, {httpOnly: true, maxAge: 15*60*1000,secure: true,sameSite: 'None'});
     
     const html = `Click vào link để xác nhận đăng ký tài khoản: <a href="${process.env.URL_SERVER}/api/user/finalRegister/${registerToken}">Click here</a>`;
     const rs = await SendMail(email, html, title='Verify Email');
