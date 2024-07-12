@@ -11,6 +11,7 @@ const {
     getBlog
 } =  require('../controller/blog');
 
+
 router.post('/add', addBlog);
 router.get('/getBlogs', getBlogs);
 router.put('/update/:_id', updateBlog);
